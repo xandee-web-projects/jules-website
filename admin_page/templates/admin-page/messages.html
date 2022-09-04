@@ -1,0 +1,42 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+<div class="container-fluid pt-3">
+    <section class="py-5">
+        <div class="container">
+            <div class="row removable">
+                <div class="col-md-8 ms-auto me-auto text-center">
+                    <h3>Contact</h3>
+                    <p>Messages from the contact us menu in the main website will show here</p>
+                </div>
+            </div>
+            <div class="row mt-lg-5 mt-4 removable">
+                {% for msg in message_list %}
+                <div class="col-lg-4 col-md-6 mb-5" id="{{msg.id}}">
+                    <div class="card mb-3">
+                        <div class="card-body border-radius-lg position-relative overflow-hidden pb-4">
+                            <h5 class="mt-2">{{msg.name}} • {{msg.contact}}</h5>
+                            <p class="mb-3" id="full{{msg.id}}" hidden>{{ msg.message }}</p>
+                            <p class="mb-3" id="msg{{msg.id}}">{{ msg.message|truncatechars:100 }}</p>
+                            <div>
+                                <a href="javascript:;" onclick="readMore({{msg.id}})" id="btn{{msg.id}}" class="font-weight-bold text-xs text-uppercase font-weight-bolder text-primary icon-move-right">
+                                    Read more
+                                    <i class="fas fa-arrow-right text-xs ms-1"></i>
+                                </a>
+                                <a href="javascript:;" onclick="delete_msg({{msg.id}})" class="font-weight-bold text-xs text-uppercase font-weight-bolder text-primary icon-move-right">
+                                    <i class="material-icons" style="right: 20px; position:absolute">delete</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    {% include 'empty.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+<script src="{% static 'js/messages.js' %}"></script>
+{% endblock %}

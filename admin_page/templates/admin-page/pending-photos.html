@@ -1,0 +1,75 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row removable">
+            <div class="col-md-8 ms-auto me-auto text-center">
+                <h3>Pending photos</h3>
+                <p>Approve the photos of staff and students if they meet standards</p>
+            </div>
+        </div>
+        <div class="row mt-lg-5 mt-4 removable">
+			{% for photo in pending_photos %}
+            <div id="{{photo.id}}" class="col-lg-4 col-md-6 mb-5">
+                <div class="card mb-4" data-animation="true">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <a class="d-block text-center blur-shadow-image" style="width: auto; height:auto;">
+                            <img src="{% static photo.photo %}" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
+                        </a>
+                        <div class="colored-shadow" style="background-image: url('{% static photo.photo %}');"></div>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="d-flex mt-n6 mx-auto">
+                            <a class="btn btn-link text-primary ms-auto border-0" onclick="delete_request({{photo.id}})" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-original-title="" title="">
+                                <i class="material-icons opacity-10">delete</i>
+                            </a>
+                            <a class="btn btn-link text-info me-auto border-0" onclick="approve_request({{photo.id}})" data-bs-toggle="tooltip" data-bs-placement="bottom" data-original-title="" title="">
+                                <i class="material-icons opacity-10">check</i>
+                            </a>
+                        </div>
+                        <h5 class="font-weight-normal mt-3">
+                            <a href="javascript:;">{{ photo.user.first_name }} {{ photo.user.last_name }}</a>
+                        </h5>
+                        <p class="mb-0">
+                            {{ photo.user.username }} 
+                            {% if photo.user.role == 'staff' %}
+                                {{ photo.user.staff_roles }}
+                            {% else %}
+                                {{ photo.user.class }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+                {% include 'empty.html' %}
+			{% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+	function delete_request(id){
+        let c = confirm("Are you sure you want to DELETE this request (cannot be undone)")
+        if (!c) return
+		fetch("/discard-photo/"+id)
+        .then((res) => res.json())
+        .then((data) => {
+            if (data == "ok") remove_photo(id)
+        });
+	}
+	function approve_request(id){
+        let c = confirm("Are you sure you want to ACCEPT this request (cannot be undone)")
+        if (!c) return
+        fetch("/accept-photo/"+id)
+        .then((res) => res.json())
+        .then((data) => {
+            if (data == "ok") remove_photo(id)
+            }
+        );
+	}
+    function remove_photo(id) {
+        $('#'+id).remove()
+    }
+</script>
+{% endblock %}

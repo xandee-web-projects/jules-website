@@ -1,0 +1,19 @@
+<li class="nav-item">
+  <a class="nav-link text-white {% if request.path|slice:'1:'|slice:'-1' == 'profile' %}active bg-gradient-primary{% endif %}"
+    href="{% url 'home' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">dashboard</i>
+    </div>
+    <span class="nav-link-text ms-1">Profile</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link {% if request.path|slice:'1:'|slice:'-1' == 'tests'  %}active bg-gradient-primary{% endif %} text-white" href="{% url 'tests' %}">
+    <div
+      class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+>
+      <i class="material-icons opacity-10">quiz</i>
+    </div>
+    <span class="nav-link-text ms-1">Tests</span>
+  </a>
+</li>

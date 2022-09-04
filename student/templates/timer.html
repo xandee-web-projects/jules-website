@@ -1,0 +1,7 @@
+{% load static %}
+<script>
+    time = '{{test.time.hour}}'*3600+'{{test.time.minute}}'*60
+</script>
+<script src="{% static 'js/timer.js' %}" defer></script>
+
+<p id="timer"></p>

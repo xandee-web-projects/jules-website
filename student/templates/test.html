@@ -1,0 +1,53 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+{% block title %}
+  {{test.name}}
+{% endblock %}
+{% block content %}
+<div class="container-fluid pt-3">
+  <div class="row removable">
+    <div class="col-lg-12">
+      <h3 class="text-center" spellcheck="false" data-ms-editor="true">
+        {{test.name}}
+      </h3>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form role="form" class="text-start" id="form" method="post" action="">
+        {% csrf_token %}
+        {% include 'timer.html'   %}
+        <div>
+          <ol type="1" id="questions">
+            <!-- Question div -->
+              {% for question in test.question_set.all %}
+              <li questionNumber="{{question.number}}">
+                <div class="input-group input-group-outline mb-3">
+                  <span class="text-lg">{{question.text}}</span>                  
+                </div>
+                <ul>
+                {% for option in question.option_set.all %}
+                <li>
+                  <div>
+                  <input type="radio" name="{{question.number}}">
+                  <span class="text-sm">{{option.text}}</span>
+                  </div>
+
+                </li>
+                {% endfor %}  
+                </ul>
+              </li>
+            {% endfor %}
+            <!-- Question div end -->
+          </ol>
+        </div>
+        <button type="submit" class="btn btn-primary mb-4" onclick="alert('You can only submit when you publish the test')">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/edit-test.css' %}" />
+</head>
+{% endblock %}

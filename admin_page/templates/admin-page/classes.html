@@ -1,0 +1,213 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+{% block title %}Classes{% endblock %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container-fluid py-4">
+	<div class="row">
+		<div class="col-12">
+			<div class="card my-4">
+				<div class="card-header pb-0 p-3"></div>
+				<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+					<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+						<div class="row">
+							<div class="col-6 d-flex align-items-center">
+								<h6 class="text-white text-capitalize ps-3">Class Table</h6>
+							</div>
+							<div class="col-6 text-end" style="right: 10px; position: relative">
+								<button
+									type="button"
+									class="btn bg-gradient-dark mb-0"
+									data-toggle="modal"
+									data-target="#newSubClassModal">
+									<i class="material-icons opacity-10">add</i> New subclass
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body px-0 pb-2">
+					<div class="table-responsive p-0">
+						<table class="table align-items-center mb-0">
+							<thead>
+								<tr>
+									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+										Class
+									</th>
+									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+										Class teacher
+									</th>
+									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+										No. of students
+									</th>
+									<th class="text-secondary opacity-7"></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for class in classes %}
+								<tr>
+									<td class="text-center align-middle text-sm">
+										<a href="{% url 'students' %}?class={{class.id}}">
+											<span>
+												{{class.name|title}}
+												{% if class.subclass %}
+												{{class.subclass|title}}
+												{% endif %}
+											</span>
+										</a>
+									</td>
+									<td class="align-middle text-center text-sm">
+										{% if class.teacher %}
+										<a href="{% url 'profile' id=class.teacher.username %}">
+											<div class="px-2 py-1">
+												<div class="flex-column justify-content-center">
+													<h6 class="mb-0 text-sm">
+														{{class.teacher.first_name}} {{class.teacher.first_name}}
+														<p class="text-xs text-secondary mb-0">{{ class.teacher.username }}</p>
+													</h6>
+												</div>
+											</div>
+										</a>
+										{% else %}
+										<span>None</span>
+										{% endif %}
+									</td>
+									<td class="align-middle text-center text-sm">
+										<span>{{class.student_set.count}}</span>
+									</td>
+									<td class="align-middle">
+										<a onclick="edit_class({{ class.id }})"
+										type="button"
+										class="text-secondary font-weight-bold text-xs"
+										data-toggle="modal"
+										data-target="#editClassModal">Edit
+										</a>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="newSubClassModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">New subclass</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="card-body">
+					<form role="form"
+						class="text-start"
+						method="post"
+						action="{% url 'new_subclass' %}">
+						{% csrf_token %}
+						<div class="input-group input-group-outline mb-3">
+							<label class="form-label">Name of subclass 1</label>
+							<input type="text" class="form-control" name="subclass1" required/>
+						</div>
+						<div class="input-group input-group-outline mb-3">
+							<label class="form-label">Name of subclass 2</label>
+							<input type="text" class="form-control" name="subclass2" required/>
+						</div>
+						<div class="input-group input-group-outline mb-3">
+							<select name="parent_class" class="form-control" aria-placeholder="Class" required>
+								<option selected disabled>-- Select parent class --</option>
+								{% for class in classes %}
+								{% if not class.subclass %}
+								<option value="{{class.id}}">
+									{{class.name}}
+								</option>
+								{% endif %}
+								{% endfor %}
+							</select>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">
+								Create
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+					Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="editClassModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Edit class teacher</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="card-body">
+					<form role="form" class="text-start" method="post">
+						{% csrf_token %}
+						<div class="input-group input-group-outline mb-3">
+							<input type="hidden" name="class" id="class">
+							<select name="teacher" id="teacher" class="form-control" aria-placeholder="Class teacher" required>
+								<option selected value="None">-- Leave blank to remove the current teacher --</option>
+								{% for teacher in teachers %}
+									{% if teacher.class_set.count < 1 %}
+										<option value="{{teacher.username}}">{{teacher.first_name}} {{teacher.last_name}}</option>
+									{% endif %}
+								{% endfor %}
+							</select>
+						</div>
+						<p class="text-center" style="margin-bottom: 0px!important;">Assign a teacher to this class</p>
+						<div class="text-center">
+							<button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">
+								Update
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" onclick="delete_class()">
+					Delete
+				</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+					Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function edit_class(id){
+		$("#class").val(id)
+	}
+	function delete_class(){
+		let id = $('#class').val()
+		var a = confirm(
+			"Are you sure you want to delete this class?\nNote: You have to assign all the students in this class to another class."
+		);
+		if (!a) return;
+		fetch('/delete-class/'+id)
+		.then((res) => {
+			location.reload()
+		});
+	}
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+.buttons {
+  margin-top: 8px!important;
+  margin-bottom: 12px!important;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.btn-icons {
+  margin-bottom: 0%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.timer-input {
+  border: 1px solid rgba(0, 0, 0, 0.254);
+  border-radius: 5px 5px 5px 5px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100px;
+  margin-bottom: 24px;
+}
+
+.header-buttons div .btn{
+  margin: 5px;
+}

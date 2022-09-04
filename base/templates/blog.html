@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Blog{% endblock %}
+{% block content%}
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row">
+      {% for b in blogs %}
+      <div class="col-md-6 col-lg-4 ftco-animate">
+        <div class="blog-entry">
+          <a
+            class="block-20 d-flex align-items-end"
+            style="background-image: url({% static b.photo %})"
+          >
+            <div class="meta-date text-center p-2">
+              <span class="day">{{b.date}}</span>
+            </div>
+          </a>
+          <div class="text bg-white p-4">
+            <h3 class="heading">
+              <a>{{b.heading}}</a>
+            </h3>
+            <p id="desc{{b.id}}">{{b.desc|truncatechars:100}}</p>
+            <p class="mb-3" id="full{{b.id}}" hidden>{{ b.desc }}</p>
+            <div>
+              <p class="mb-0"><a href="javasript:;" class="btn btn-secondary" id="btn{{b.id}}" onclick="readMore({{b.id}})">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<script>
+  function readMore(id) {
+    var btnText = document.getElementById("btn" + id);
+
+    if (!$("#full" + id).is(":hidden")) {
+      btnText.innerHTML = "Read more";
+      $("#full" + id).prop("hidden", true);
+      $("#desc" + id).prop("hidden", false);
+    } else {
+      btnText.innerHTML = "Read less";
+      $("#full" + id).prop("hidden", false);
+      $("#desc" + id).prop("hidden", true);
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'portal/base.html' %}
+{% block title %}Website{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+	<div class="row">
+		<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+			<a href="{% url 'edit_blogs' %}">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div class="icon icon-lg icon-shape bg-gradient-secondary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">apps</i>
+						</div>
+						<div class="text-end pt-1">
+							<h4 class="mb-0">Blogs</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0" />
+					<div class="card-footer p-3"></div>
+				</div>
+			</a>
+		</div>
+		<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+			<a href="{% url 'edit_fees' %}">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">card_membership</i>
+						</div>
+						<div class="text-end pt-1">
+							<h4 class="mb-0">Fees</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0" />
+					<div class="card-footer p-3"></div>
+				</div>
+			</a>
+		</div>
+		<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+			<a href="{% url 'messages' %}">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div class="icon icon-lg icon-shape bg-gradient-info  shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">email</i>
+						</div>
+						<div class="text-end pt-1">
+							<h4 class="mb-0">Messages</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0" />
+					<div class="card-footer p-3"></div>
+				</div>
+			</a>
+		</div>
+		<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+			<a href="{% url 'randoms' %}">
+				<div class="card">
+					<div class="card-header p-3 pt-2">
+						<div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 position-absolute">
+							<i class="material-icons opacity-10">support</i>
+						</div>
+						<div class="text-end pt-1">
+							<h4 class="mb-0">Randoms</h4>
+						</div>
+					</div>
+					<hr class="dark horizontal my-0" />
+					<div class="card-footer p-3"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

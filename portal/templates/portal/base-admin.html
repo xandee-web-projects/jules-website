@@ -1,0 +1,50 @@
+<li class="nav-item">
+  <a class="nav-link {% if request.path|slice:'1:'|slice:'-1' == 'staff'  %}active bg-gradient-primary{% endif %} text-white" href="{% url 'staff' %}">
+    <div
+      class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+>
+      <i class="material-icons opacity-10">people</i>
+    </div>
+    <span class="nav-link-text ms-1">Staff</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white {% if request.path|slice:'1:'|slice:'-1' == 'classes'  %}active bg-gradient-primary{% endif %}" href="{% url 'classes' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">local_library</i>
+    </div>
+    <span class="nav-link-text ms-1">Classes</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link {% if request.path|slice:'1:'|slice:'-1' == 'students'  %}active bg-gradient-primary{% endif %} text-white" href="{% url 'students' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">school</i>
+    </div>
+    <span class="nav-link-text ms-1">Students</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-white {% if request.path|slice:'1:'|slice:'-1' in 'website edit-blogs edit-fees messages randoms'  %}active bg-gradient-primary{% endif %}" href="{% url 'website' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">web</i>
+    </div>
+    <span class="nav-link-text ms-1">Website</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link {% if request.path|slice:'1:'|slice:'-1' == 'pending-photos'  %}active bg-gradient-primary{% endif %} text-white" href="{% url 'pending_photos' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">photo</i>
+    </div>
+    <span class="nav-link-text ms-1">Pending Photos</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link {% if request.path|slice:'1:'|slice:'-1' == 'contact-list'  %}active bg-gradient-primary{% endif %} text-white" href="{% url 'contact_list' %}">
+    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+      <i class="material-icons opacity-10">phone</i>
+    </div>
+    <span class="nav-link-text ms-1">Contact list</span>
+  </a>
+</li>
