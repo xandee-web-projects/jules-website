@@ -7,7 +7,7 @@ from datetime import date
 class Blog(models.Model):
     heading = models.CharField(max_length=120)
     desc = models.TextField()
-    photo = models.ImageField(blank=True, null=True, upload_to="static/uploads/blogs/")
+    photo = models.ImageField(blank=True, null=True, upload_to="uploads/blogs/")
     date = models.DateField(default=date.today)
 
 class Message(models.Model):
@@ -18,7 +18,7 @@ class Message(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
 class Random(models.Model):
-    photo = models.ImageField(upload_to="static/uploads/random/")
+    photo = models.ImageField(upload_to="uploads/random/")
 
 class Contact(models.Model):
     GENDERS = (

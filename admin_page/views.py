@@ -83,9 +83,9 @@ def update_blog(request):
 def delete_blog(request, id):
     blog = Blog.objects.get(id=id)
     if blog:
-        messages.success(request, f"Blog {blog.heading} deleted")
         del_photo(blog.photo)
         blog.delete()
+        messages.success(request, f"Blog {blog.heading} deleted")
     else:
         messages.error(request, "Blog was not found. Try refreshing the page")
     return redirect('edit_blogs')
