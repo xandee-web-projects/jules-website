@@ -14,10 +14,10 @@ class User(AbstractUser):
     role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
     phone = models.CharField(max_length=12, blank=True)
     other_names = models.CharField(max_length=60, blank=True)
-    photo = models.ImageField(blank=True, null=True, upload_to="uploads/users/", default="uploads/users/default.png")
+    photo = models.ImageField(blank=True, null=True, upload_to="static/uploads/users/", default="static/uploads/users/default.png")
 
 class PendingPhoto(models.Model):
-    photo = models.ImageField(upload_to="uploads/users/")
+    photo = models.ImageField(upload_to="static/uploads/users/")
     user = models.OneToOneField(User, editable=True, on_delete=models.CASCADE)
 
 class Staff(User):
