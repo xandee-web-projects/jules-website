@@ -9,4 +9,4 @@ urlpatterns = [
     path('', include('staff.urls'))
 ]
 
-handler404 = "portal.views.page_not_found_view"
+handler404 = "base.views.page_not_found_view"

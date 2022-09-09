@@ -4,3 +4,6 @@ dj
 todo.txt
 docker-compose.yml
 Dockerfile
+static
+__pycache__
+images
