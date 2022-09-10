@@ -10,5 +10,8 @@ function delete_blog(id=$("#id").val()) {
 	var a = confirm("Are you sure you want to delete this blog");
 	if (!a) return;
 	fetch("/delete-blog/"+id)
-	.then((res)=>location.reload())
+	.then((res)=>res.json())
+	.then(data => {
+		if (data == "ok") $(`#${id}`).remove()
+	})
 }

@@ -87,8 +87,9 @@ def delete_blog(request, id):
         blog.delete()
         messages.success(request, f"Blog {blog.heading} deleted")
     else:
-        messages.error(request, "Blog was not found. Try refreshing the page")
-    return redirect('edit_blogs')
+        return JsonResponse("notok", safe=False)
+        # messages.error(request, "Blog was not found. Try refreshing the page")
+    return JsonResponse("ok", safe=False)
 
 @login_required
 @admin_login_required
