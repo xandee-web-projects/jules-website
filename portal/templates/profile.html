@@ -71,7 +71,7 @@
 							<strong class="text-dark">Gender:</strong> &nbsp;
 							{{person.gender}}
 						</li>
-						{% if person.role != "staff" %}
+						{% if person.role == "student" %}
 						<li class="list-group-item border-0 ps-0 text-sm">
 							<strong class="text-dark">Class:</strong> &nbsp;
 							{{person.current_class.name}}
