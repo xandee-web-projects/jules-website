@@ -7,11 +7,12 @@ class User(AbstractUser):
         ('F', 'Female')
     )
     ROLES = (
+        ('admin', 'admin'),
         ('staff', 'staff'),
         ('student', 'student')
     )
     gender = models.CharField(max_length=10, choices=GENDERS, blank=True)
-    role = models.CharField(max_length=10, choices=ROLES, default=ROLES[1][1])
+    role = models.CharField(max_length=10, choices=ROLES, default=ROLES[0][0])
     phone = models.CharField(max_length=12, blank=True)
     other_names = models.CharField(max_length=60, blank=True)
     photo = models.ImageField(blank=True, null=True, upload_to="uploads/users/", default="uploads/users/default.png")

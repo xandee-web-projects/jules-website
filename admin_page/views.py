@@ -184,7 +184,7 @@ def classes(request):
             messages.success(request, f"{teacher.first_name} is now the teacher of {c.name}")
         else:
             messages.error(request, f"The staff or the class were nor found")
-    return render(request, 'admin-page/classes.html', {"classes":Class.objects.all(), "teachers":Staff.objects.filter(staff_role__endswith="teacher").order_by("first_name")})
+    return render(request, 'admin-page/classes.html', {"classes":Class.objects.all().order_by("id"), "teachers":Staff.objects.filter(staff_role__endswith="teacher").order_by("first_name")})
 
 @login_required
 @admin_login_required

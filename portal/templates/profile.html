@@ -34,8 +34,10 @@
 					<p class="mb-0 font-weight-normal text-sm">{{person.role|title}} • 
 						{% if person.role == "staff" %}
 							{{person.staff_role|title}}
+						{% elif not person.current_class.name %}
+							No class
 						{% else %}
-							{{person.current_class.name }}
+							{{ person.current_class.name }}
 						{% endif %}
 					</p>
 				</div>
@@ -111,13 +113,11 @@
 					{% if user.username == person.username %}
 						<hr>
 						{% if user.pendingphoto.photo %}
-						<p>
-							You have an upload request that is currently being processed
-						</p>
+						<p>You have an upload request that is currently being processed</p>
 						{% endif %}
 						<button data-toggle="modal" data-target="#uploadPhotoModal" class="btn btn-primary">Upload / Change photo</button>
+						<a href="{% url 'change_password' %}"><button class="btn btn-primary">Change Password</button></a>
 					{% endif %}
-						
 				</div>
 			</div>
 		</div>

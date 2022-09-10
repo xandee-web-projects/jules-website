@@ -24,7 +24,9 @@ def login_page(request):
 def profile(request, id):
     user = User.objects.get(username=id)
     if user:
-        if user.role == "student":
+        if user.is_superuser:
+            user = request.user
+        elif user.role == "student":
             user = Student.objects.get(username=id)
         elif user.role == "staff":
             user = Staff.objects.get(username=id)
@@ -56,3 +58,24 @@ def forgot_password(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def change_password(request):
+    if request.method == "POST":
+        former_password = request.POST.get("former")
+        new_password = request.POST.get("new")
+        new_password_confirm = request.POST.get("new_confirm")
+        error = False
+        user = authenticate(username=request.user.username, password=request.POST.get('former'))
+        if not user:
+            messages.error(request, "Former password is incorrect")
+            error = True
+        if new_password != new_password_confirm:
+            messages.error(request, "New passwords has to be has to be thesame")
+            error = True
+        if error:
+            return redirect("change_password")        
+        request.user.set_password(new_password)
+        request.user.save()
+        login(request.user)
+        messages.success(request, "Your password has been set")
+    return render(request, "change-password.html")
