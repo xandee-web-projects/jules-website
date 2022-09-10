@@ -344,7 +344,7 @@ def edit_fees(request):
             messages.success(request, f"{c.name}'s school fees has been updated")
         else:
             messages.error(request, f"The class you are trying to edit was not found")
-    return render(request, "admin-page/edit-fees.html", {"classes":ClassFees.objects.all()})
+    return render(request, "admin-page/edit-fees.html", {"classes":ClassFees.objects.order_by("id")})
 
 @login_required
 @admin_login_required

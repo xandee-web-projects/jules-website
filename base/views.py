@@ -30,7 +30,7 @@ def contact(request):
     return render(request, "contact.html", content)
 
 def fees(request):
-    return render(request, "fees.html", {"fees": ClassFees.objects.all()})
+    return render(request, "fees.html", {"fees": ClassFees.objects.order_by("id")})
 
 def page_not_found_view(request, exception):
     return render(request, '404-base.html', status=404)
