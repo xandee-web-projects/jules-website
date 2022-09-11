@@ -25,7 +25,7 @@ def profile(request, id):
     user = User.objects.get(username=id)
     if user:
         if user.is_superuser:
-            user = request.user
+            pass
         elif user.role == "student":
             user = Student.objects.get(username=id)
         elif user.role == "staff":
@@ -38,6 +38,7 @@ def profile(request, id):
 def home(request):
     return profile(request, request.user.username)
 
+@login_required
 def upload_photo(request, id):
     user = User.objects.filter(username=id).first()
     if user:
@@ -55,17 +56,19 @@ def page_not_found_view(request, exception):
 def forgot_password(request):
     return render(request, 'forgot-password.html')
 
+@login_required
 def logout_user(request):
     logout(request)
     return redirect('login')
 
+@login_required
 def change_password(request):
     if request.method == "POST":
         former_password = request.POST.get("former")
         new_password = request.POST.get("new")
         new_password_confirm = request.POST.get("new_confirm")
         error = False
-        user = authenticate(username=request.user.username, password=request.POST.get('former'))
+        user = authenticate(username=request.user.username, password=former_password)
         if not user:
             messages.error(request, "Former password is incorrect")
             error = True
@@ -76,6 +79,6 @@ def change_password(request):
             return redirect("change_password")        
         request.user.set_password(new_password)
         request.user.save()
-        login(request.user)
+        login(request, request.user)
         messages.success(request, "Your password has been set")
     return render(request, "change-password.html")
